@@ -127,7 +127,7 @@ def add_hyperlink(paragraph, url, text):
 
 
 def create_report_english(data, recommendations):
-        doc = Document()
+        doc = Document('Manzili_Energy_Audit_Report_.docx')
 
         # Add logos to the header
         section = doc.sections[0]
