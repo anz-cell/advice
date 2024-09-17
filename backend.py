@@ -1,6 +1,6 @@
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-from docx.shared import  Inches
+from docx.shared import Inches
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import google.generativeai as genai
