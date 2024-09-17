@@ -46,4 +46,4 @@ def delete_file():
         #since the function doesnt return it will say there is a warning it doesnt return but we dont want to return anything so its fine, the warning doesnt cause any problems.
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
