@@ -168,98 +168,88 @@
     </form>
 </div>
    <script>
-        function toggleDropdown(option) {
-            const checkbox = document.getElementById(option);
-            const dropdown = document.getElementById('dropdown_' + option);
-            const input = document.getElementById('input_' + option);
-            
-            if (checkbox.checked) {
-                dropdown.style.display = 'inline-block';
-                input.style.display = 'inline-block';
-            } else {
-                dropdown.style.display = 'none';
-                input.style.display = 'none';
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(function(checkbox) {
-                toggleDropdown(checkbox.id);
-            });
-        });
- 
-        document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('auditForm');
-        const language = "{{ language }}";
+function toggleDropdown(option) {
+    const checkbox = document.getElementById(option);
+    const dropdown = document.getElementById('dropdown_' + option);
+    const input = document.getElementById('input_' + option);
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevents the default form submission behavior
+    if (checkbox.checked) {
+        dropdown.style.display = 'inline-block';
+        input.style.display = 'inline-block';
+    } else {
+        dropdown.style.display = 'none';
+        input.style.display = 'none';
+    }
+}
 
-            const formData = new FormData(form);
-            const formObject = {};
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle dropdowns based on initial checkbox states
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+        toggleDropdown(checkbox.id);
+    });
 
-            formData.forEach((value, key) => {
-                formObject[key] = value;
-            });
-            const overlay = document.getElementById('overlay');
-            const status = document.getElementById('status');
-            
-            overlay.style.display = 'block';
+    const form = document.getElementById('auditForm');
+    const language = "{{ language }}";
 
-            console.log(formObject);
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevents the default form submission behavior
 
-            fetch('/generate_report', {method: 'POST',
+        const formData = new FormData(form);
+        const overlay = document.getElementById('overlay');
+        const status = document.getElementById('status');
+        
+        overlay.style.display = 'block';
+
+        fetch('/generate_report', {
+            method: 'POST',
             body: formData
         })
-        .then(response => response.blob())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Create a link element for downloading the file
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            let filename = 'Manzili_Energy_Audit_Report';
+            const reportNumber = language === 'arabic'
+                ? document.querySelector('input[name="رقم_التقرير"]').value
+                : document.querySelector('input[name="report_number"]').value;
 
-                .then(blob => {
-                   
-                    // Create a link element
-                    const link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    let filename = 'Manzili_Energy_Audit_Report';
-                if (language == 'arabic') {
-                    const reportNumber = document.querySelector('input[name="رقم_التقرير"]').value;
-                    if (reportNumber !== '') {
-                        filename += `_${reportNumber}`;
-                    }
-                } else {
-                    const reportNumber = document.querySelector('input[name="report_number"]').value;
-                    if (reportNumber !== '') {
-                        filename += `_${reportNumber}`;
-                    }
-                }
-                filename += '.docx';
-                link.download = filename;
+            if (reportNumber) {
+                filename += `_${reportNumber}`;
+            }
+            filename += '.docx';
+            link.download = filename;
 
-                    
-                 overlay.style.display = 'none';
+            overlay.style.display = 'none';
 
-                    // Append link to the body and trigger a click
-                    document.body.appendChild(link);
-                    link.click();
-                    
-                    // Clean up
-                    document.body.removeChild(link);
-                    
-                    fetch('/delete_file', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ filename: filename })
-                    })
-                })
-                .catch(error => {
-                    overlay.style.display = 'none';
-                    status.textContent = 'Error generating report: ' + error;
-});
+            // Append link to the body and trigger a click
+            document.body.appendChild(link);
+            link.click();
+            
+            // Clean up
+            document.body.removeChild(link);
 
+            // Optionally delete the file from server
+            fetch('/delete_file', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ filename: filename })
+            });
+        })
+        .catch(error => {
+            overlay.style.display = 'none';
+            status.textContent = 'Error generating report: ' + error;
         });
-
-        
     });
+});
    </script>
 
 </body>

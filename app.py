@@ -22,6 +22,7 @@ def index(language):
     else:
         Recommendations = list(Recommendation_English.keys())
     return render_template('index.html', language=language, Recommendation = Recommendations)
+
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
         data = request.form.to_dict()
