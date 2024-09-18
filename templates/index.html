@@ -1,178 +1,239 @@
 <!DOCTYPE html>
 <html lang="{{ 'ar' if language == 'arabic' else 'en' }}" dir="{{ 'rtl' if language == 'arabic' else 'ltr' }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ 'Manzili Energy Audit Service' if language == 'english' else 'خدمة تدقيق طاقة منزلي' }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
 
 
-    <form id = 'auditForm'>
+    <form id='auditForm'>
         <div class="form-group">
-            <label for="{{ 'report_number' if language == 'english' else 'رقم_التقرير' }}">{{ 'Report Number' if language == 'english' else 'رقم التقرير' }}</label>
-            <input type="text" id="{{ 'report_number' if language == 'english' else 'رقم_التقرير' }}" name = "{{ 'report_number' if language == 'english' else 'رقم_التقرير' }}" 
-            placeholder="Enter Report Number">
+            <label for="{{ 'report_number' if language == 'english' else 'رقم_التقرير' }}">{{ 'Report Number' if
+                language == 'english' else 'رقم التقرير' }}</label>
+            <input type="text" id="{{ 'report_number' if language == 'english' else 'رقم_التقرير' }}"
+                name="{{ 'report_number' if language == 'english' else 'رقم_التقرير' }}"
+                placeholder="Enter Report Number">
         </div>
 
         <div class="form-group">
-            <label for="{{ 'date_of_audit' if language == 'english' else 'تاريخ_التدقيق' }}">{{ 'Date of Audit' if language == 'english' else 'تاريخ التدقيق' }}</label>
-            <input type="date" id="{{ 'date_of_audit' if language == 'english' else 'تاريخ_التدقيق' }}" name="{{ 'date_of_audit' if language == 'english' else 'تاريخ_التدقيق' }}" placeholder="Enter Date of Audit">
+            <label for="{{ 'date_of_audit' if language == 'english' else 'تاريخ_التدقيق' }}">{{ 'Date of Audit' if
+                language == 'english' else 'تاريخ التدقيق' }}</label>
+            <input type="date" id="{{ 'date_of_audit' if language == 'english' else 'تاريخ_التدقيق' }}"
+                name="{{ 'date_of_audit' if language == 'english' else 'تاريخ_التدقيق' }}"
+                placeholder="Enter Date of Audit">
         </div>
 
         <div class="form-group">
-            <label for="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}">{{ 'Type of Audit' if language == 'english' else 'نوع التدقيق' }}</label>
-            <select id="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}" name="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}" >
-                <option value="{{ 'Home Visit' if language == 'english' else 'زيارة منزلية' }}">{{ 'Home Visit' if language == 'english' else 'زيارة منزلية' }}</option>
-                <option value="{{ 'Video Call' if language == 'english' else 'مكالمة فيديو' }}">{{ 'Video Call' if language == 'english' else 'مكالمة فيديو' }}</option>
-                <option value="{{ 'Phone Call' if language == 'english' else 'مكالمة هاتفية' }}">{{ 'Phone Call' if language == 'english' else 'مكالمة هاتفية' }}</option>
+            <label for="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}">{{ 'Type of Audit' if
+                language == 'english' else 'نوع التدقيق' }}</label>
+            <select id="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}"
+                name="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}">
+                <option value="{{ 'Home Visit' if language == 'english' else 'زيارة منزلية' }}">{{ 'Home Visit' if
+                    language == 'english' else 'زيارة منزلية' }}</option>
+                <option value="{{ 'Video Call' if language == 'english' else 'مكالمة فيديو' }}">{{ 'Video Call' if
+                    language == 'english' else 'مكالمة فيديو' }}</option>
+                <option value="{{ 'Phone Call' if language == 'english' else 'مكالمة هاتفية' }}">{{ 'Phone Call' if
+                    language == 'english' else 'مكالمة هاتفية' }}</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="{{ 'homeowner' if language == 'english' else 'صاحب_المنزل' }}">{{ 'Homeowner' if language == 'english' else 'صاحب المنزل' }}</label>
-            <input type="text" id="{{ 'homeowner' if language == 'english' else 'صاحب_المنزل' }}" name="{{ 'homeowner' if language == 'english' else 'صاحب_المنزل' }}" 
-            placeholder="Enter Name of Homeowner">
+            <label for="{{ 'homeowner' if language == 'english' else 'صاحب_المنزل' }}">{{ 'Homeowner' if language ==
+                'english' else 'صاحب المنزل' }}</label>
+            <input type="text" id="{{ 'homeowner' if language == 'english' else 'صاحب_المنزل' }}"
+                name="{{ 'homeowner' if language == 'english' else 'صاحب_المنزل' }}"
+                placeholder="Enter Name of Homeowner">
         </div>
 
         <div class="form-group">
-            <label for="{{ 'contact_number' if language == 'english' else 'رقم_الاتصال' }}">{{ 'Contact Number' if language == 'english' else 'رقم الاتصال' }}</label>
-            <input type="text" id="{{ 'contact_number' if language == 'english' else 'رقم_الاتصال' }}" name="{{ 'contact_number' if language == 'english' else 'رقم_الاتصال' }}"
-             placeholder="### ### ####" pattern="[0-9]{10}" maxlength="10" minlength="10">
+            <label for="{{ 'contact_number' if language == 'english' else 'رقم_الاتصال' }}">{{ 'Contact Number' if
+                language == 'english' else 'رقم الاتصال' }}</label>
+            <input type="text" id="{{ 'contact_number' if language == 'english' else 'رقم_الاتصال' }}"
+                name="{{ 'contact_number' if language == 'english' else 'رقم_الاتصال' }}" placeholder="### ### ####"
+                pattern="[0-9]{10}" maxlength="10" minlength="10">
         </div>
 
         <div class="form-group">
-            <label for="{{ 'location' if language == 'english' else 'الموقع' }}">{{ 'Location' if language == 'english' else 'الموقع' }}</label>
-            <input type="text" id="{{ 'location' if language == 'english' else 'الموقع' }}" name="{{ 'location' if language == 'english' else 'الموقع' }}" placeholder="Enter Location">
+            <label for="{{ 'location' if language == 'english' else 'الموقع' }}">{{ 'Location' if language == 'english'
+                else 'الموقع' }}</label>
+            <input type="text" id="{{ 'location' if language == 'english' else 'الموقع' }}"
+                name="{{ 'location' if language == 'english' else 'الموقع' }}" placeholder="Enter Location">
         </div>
 
         <div class="form-group">
-            <label for="{{ 'house_number' if language == 'english' else 'رقم_المنزل' }}">{{ 'House Number' if language == 'english' else 'رقم المنزل' }}</label>
-            <input type="text" id="{{ 'house_number' if language == 'english' else 'رقم_المنزل' }}" name="{{ 'house_number' if language == 'english' else 'رقم_المنزل' }}" placeholder="Enter House Number">
+            <label for="{{ 'house_number' if language == 'english' else 'رقم_المنزل' }}">{{ 'House Number' if language
+                == 'english' else 'رقم المنزل' }}</label>
+            <input type="text" id="{{ 'house_number' if language == 'english' else 'رقم_المنزل' }}"
+                name="{{ 'house_number' if language == 'english' else 'رقم_المنزل' }}" placeholder="Enter House Number">
         </div>
 
         <div class="form-group">
-            <label for="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">{{ 'Type of Accommodation' if language == 'english' else 'نوع الإقامة' }}</label>
-            <select id="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}" name="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">
-                <option value="{{ 'Villa' if language == 'english' else 'فيلا' }}">{{ 'Villa' if language == 'english' else 'فيلا' }}</option>
-                <option value="{{ 'Mansion' if language == 'english' else 'قصر' }}">{{ 'Mansion' if language == 'english' else 'قصر' }}</option>
-                <option value="{{ 'Apartments' if language == 'english' else 'شقة' }}">{{ 'Apartments' if language == 'english' else 'شقة' }}</option>
-            </select>        
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ 'number_of_residents' if language == 'english' else 'عدد_السكان' }}">{{ 'Number of Residents' if language == 'english' else 'عدد السكان' }}</label>
-            <input type="number" id="{{ 'number_of_residents' if language == 'english' else 'عدد_السكان' }}" name = "{{ 'number_of_residents' if language == 'english' else 'عدد_السكان' }}" value="1" min="1" maxlength='2'>
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}">{{ 'Year of Construction' if language == 'english' else 'سنة البناء' }}</label>
-            <input type="text" id="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}" name="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}" 
-            min="1800" placeholder="####" pattern="\d{4}" maxlength="4" minlength="4">
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}">{{ 'Number of Bedrooms' if language == 'english' else 'عدد غرف النوم' }}</label>
-            <input type="number" id="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}" name="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}" value="3" min="1">
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ 'number_of_floors' if language == 'english' else 'عدد_الطوابق' }}">{{ 'Number of Floors' if language == 'english' else 'عدد الطوابق' }}</label>
-            <input type="number" id="{{ 'number_of_floors' if language == 'english' else 'عدد_الطوابق' }}" name="{{ 'number_of_floors' if language == 'english' else 'عدد_الطوابق' }}" value="1" min="1">
-        </div>
-        <div class="form-group">
-            <label for="{{ 'account_number' if language == 'english' else 'رقم_الحساب' }}">{{ 'Account Number' if language == 'english' else 'رقم الحساب' }}</label>
-            <input type="text" id="{{ 'account_number' if language == 'english' else 'رقم_الحساب' }}" name="{{ 'account_number' if language == 'english' else 'رقم_الحساب' }}" 
-            placeholder="############" pattern="\d{12}" maxlength="12"  minlength="12">
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}">{{ 'Outdoor Garden' if language == 'english' else 'حديقة خارجية' }}</label>
-            <select id="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}" name = "{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}">
-                <option value="{{ 'None' if language == 'english' else 'لا يوجد' }}">{{ 'None' if language == 'english' else 'لا يوجد' }}</option>
-                <option value="{{ 'Small' if language == 'english' else 'صغير' }}">{{ 'Small' if language == 'english' else 'صغير' }}</option>
-                <option value="{{ 'Large' if language == 'english' else 'كبير' }}">{{ 'Large' if language == 'english' else 'كبير' }}</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}">{{ 'Swimming Pool' if language == 'english' else 'حمام سباحة' }}</label>
-            <select id="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}" name = "{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}">
-                <option value="{{ 'No' if language == 'english' else 'لا يوجد' }}">{{ 'No' if language == 'english' else 'لا يوجد' }}</option>
-                <option value="{{ 'Yes' if language == 'english' else 'يوجد' }}">{{ 'Yes' if language == 'english' else 'يوجد' }}</option>
+            <label for="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">{{ 'Type of
+                Accommodation' if language == 'english' else 'نوع الإقامة' }}</label>
+            <select id="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}"
+                name="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">
+                <option value="{{ 'Villa' if language == 'english' else 'فيلا' }}">{{ 'Villa' if language == 'english'
+                    else 'فيلا' }}</option>
+                <option value="{{ 'Mansion' if language == 'english' else 'قصر' }}">{{ 'Mansion' if language ==
+                    'english' else 'قصر' }}</option>
+                <option value="{{ 'Apartments' if language == 'english' else 'شقة' }}">{{ 'Apartments' if language ==
+                    'english' else 'شقة' }}</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="{{ 'ac_systems' if language == 'english' else 'أنظمة_تكييف' }}">{{ 'AC Systems' if language == 'english' else 'أنظمة تكييف' }}</label>
-            <textarea id="{{ 'ac_systems' if language == 'english' else 'أنظمة_تكييف' }}" name="{{ 'ac_systems' if language == 'english' else 'أنظمة_تكييف' }}" 
-            placeholder="Enter AC systems"></textarea>
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ 'lighting' if language == 'english' else 'إضاءة' }}">{{ 'Lighting' if language == 'english' else 'إضاءة' }}</label>
-            <textarea id="{{ 'lighting' if language == 'english' else 'إضاءة' }}" name= "{{ 'lighting' if language == 'english' else 'إضاءة' }}" 
-            placeholder="Enter lighting details"></textarea>
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ 'water_taps' if language == 'english' else 'حنفيات_المياه' }}">{{ 'Water Taps' if language == 'english' else 'حنفيات المياه' }}</label>
-            <textarea id="{{ 'water_taps' if language == 'english' else 'حنفيات_المياه' }}" name="{{ 'water_taps' if language == 'english' else 'حنفيات_المياه' }}" 
-            placeholder="Enter water taps details"></textarea>
+            <label for="{{ 'number_of_residents' if language == 'english' else 'عدد_السكان' }}">{{ 'Number of Residents'
+                if language == 'english' else 'عدد السكان' }}</label>
+            <input type="number" id="{{ 'number_of_residents' if language == 'english' else 'عدد_السكان' }}"
+                name="{{ 'number_of_residents' if language == 'english' else 'عدد_السكان' }}" value="1" min="1"
+                maxlength='2'>
         </div>
 
         <div class="form-group">
-            <label for="{{ 'water_heaters' if language == 'english' else 'سخانات_المياه' }}">{{ 'Water Heaters' if language == 'english' else 'سخانات المياه' }}</label>
-            <textarea id="{{ 'water_heaters' if language == 'english' else 'سخانات_المياه' }}" name="{{ 'water_heaters' if language == 'english' else 'سخانات_المياه' }}" 
-            placeholder="Enter water heaters details"></textarea>
+            <label for="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}">{{ 'Year of
+                Construction' if language == 'english' else 'سنة البناء' }}</label>
+            <input type="text" id="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}"
+                name="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}" min="1800"
+                placeholder="####" pattern="\d{4}" maxlength="4" minlength="4">
         </div>
 
         <div class="form-group">
-            <label for="{{ 'other' if language == 'english' else 'أخرى' }}">{{ 'Other' if language == 'english' else 'أخرى' }}</label>
-            <textarea id="{{ 'other' if language == 'english' else 'أخرى' }}" name="{{ 'other' if language == 'english' else 'أخرى' }}"
-             placeholder="Others"></textarea>
+            <label for="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}">{{ 'Number of
+                Bedrooms' if language == 'english' else 'عدد غرف النوم' }}</label>
+            <input type="number" id="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}"
+                name="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}" value="3" min="1">
+        </div>
+
+        <div class="form-group">
+            <label for="{{ 'number_of_floors' if language == 'english' else 'عدد_الطوابق' }}">{{ 'Number of Floors' if
+                language == 'english' else 'عدد الطوابق' }}</label>
+            <input type="number" id="{{ 'number_of_floors' if language == 'english' else 'عدد_الطوابق' }}"
+                name="{{ 'number_of_floors' if language == 'english' else 'عدد_الطوابق' }}" value="1" min="1">
+        </div>
+        <div class="form-group">
+            <label for="{{ 'account_number' if language == 'english' else 'رقم_الحساب' }}">{{ 'Account Number' if
+                language == 'english' else 'رقم الحساب' }}</label>
+            <input type="text" id="{{ 'account_number' if language == 'english' else 'رقم_الحساب' }}"
+                name="{{ 'account_number' if language == 'english' else 'رقم_الحساب' }}" placeholder="############"
+                pattern="\d{12}" maxlength="12" minlength="12">
+        </div>
+
+        <div class="form-group">
+            <label for="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}">{{ 'Outdoor Garden' if
+                language == 'english' else 'حديقة خارجية' }}</label>
+            <select id="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}"
+                name="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}">
+                <option value="{{ 'None' if language == 'english' else 'لا يوجد' }}">{{ 'None' if language == 'english'
+                    else 'لا يوجد' }}</option>
+                <option value="{{ 'Small' if language == 'english' else 'صغير' }}">{{ 'Small' if language == 'english'
+                    else 'صغير' }}</option>
+                <option value="{{ 'Large' if language == 'english' else 'كبير' }}">{{ 'Large' if language == 'english'
+                    else 'كبير' }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}">{{ 'Swimming Pool' if language
+                == 'english' else 'حمام سباحة' }}</label>
+            <select id="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}"
+                name="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}">
+                <option value="{{ 'No' if language == 'english' else 'لا يوجد' }}">{{ 'No' if language == 'english' else
+                    'لا يوجد' }}</option>
+                <option value="{{ 'Yes' if language == 'english' else 'يوجد' }}">{{ 'Yes' if language == 'english' else
+                    'يوجد' }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ 'ac_systems' if language == 'english' else 'أنظمة_تكييف' }}">{{ 'AC Systems' if language ==
+                'english' else 'أنظمة تكييف' }}</label>
+            <textarea id="{{ 'ac_systems' if language == 'english' else 'أنظمة_تكييف' }}"
+                name="{{ 'ac_systems' if language == 'english' else 'أنظمة_تكييف' }}"
+                placeholder="Enter AC systems"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ 'lighting' if language == 'english' else 'إضاءة' }}">{{ 'Lighting' if language == 'english'
+                else 'إضاءة' }}</label>
+            <textarea id="{{ 'lighting' if language == 'english' else 'إضاءة' }}"
+                name="{{ 'lighting' if language == 'english' else 'إضاءة' }}"
+                placeholder="Enter lighting details"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ 'water_taps' if language == 'english' else 'حنفيات_المياه' }}">{{ 'Water Taps' if language ==
+                'english' else 'حنفيات المياه' }}</label>
+            <textarea id="{{ 'water_taps' if language == 'english' else 'حنفيات_المياه' }}"
+                name="{{ 'water_taps' if language == 'english' else 'حنفيات_المياه' }}"
+                placeholder="Enter water taps details"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ 'water_heaters' if language == 'english' else 'سخانات_المياه' }}">{{ 'Water Heaters' if
+                language == 'english' else 'سخانات المياه' }}</label>
+            <textarea id="{{ 'water_heaters' if language == 'english' else 'سخانات_المياه' }}"
+                name="{{ 'water_heaters' if language == 'english' else 'سخانات_المياه' }}"
+                placeholder="Enter water heaters details"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ 'other' if language == 'english' else 'أخرى' }}">{{ 'Other' if language == 'english' else
+                'أخرى' }}</label>
+            <textarea id="{{ 'other' if language == 'english' else 'أخرى' }}"
+                name="{{ 'other' if language == 'english' else 'أخرى' }}" placeholder="Others"></textarea>
         </div>
 
         <h3>{{ 'Recommendation' if language == 'english' else 'توصية' }}</h3>
         <div class="checkbox-container">
-        {% for option in Recommendation %}
-        <div class="form-group">
-            <input type="checkbox" id="{{ option }}" name="{{ option }}" onchange="toggleDropdown('{{ option }}')">
-            <label for="{{ option }}">{{ option }}</label>
-        
-            <select id="dropdown_{{ option }}" name="dropdown_{{ option }}" style="display: none"; class ="dropdown">
-                <option value="{{ 'High Priority' if language == 'english' else 'أولوية قصوى' }}">{{ 'High Priority' if language == 'english' else 'أولوية قصوى' }}</option>
-                <option value="{{ 'Medium Priority' if language == 'english' else 'أولوية متوسطة' }}">{{ 'Medium Priority' if language == 'english' else 'أولوية متوسطة' }}</option>
-                <option value="{{ 'Low Priority' if language == 'english' else 'أولوية منخفضة' }}">{{ 'Low Priority' if language == 'english' else 'أولوية منخفضة' }}</option>
-            </select>
+            {% for option in Recommendation %}
+            <div class="form-group">
+                <input type="checkbox" id="{{ option }}" name="{{ option }}" onchange="toggleDropdown('{{ option }}')">
+                <label for="{{ option }}">{{ option }}</label>
 
-            <input  type="text" id="input_{{ option }}" name="input_{{ option }}" style="display: none"; class ="room_input" placeholder="Enter rooms"></select>
+                <select id="dropdown_{{ option }}" name="dropdown_{{ option }}" style="display: none" ;
+                    class="dropdown">
+                    <option value="{{ 'High Priority' if language == 'english' else 'أولوية قصوى' }}">{{ 'High Priority'
+                        if language == 'english' else 'أولوية قصوى' }}</option>
+                    <option value="{{ 'Medium Priority' if language == 'english' else 'أولوية متوسطة' }}">{{ 'Medium
+                        Priority' if language == 'english' else 'أولوية متوسطة' }}</option>
+                    <option value="{{ 'Low Priority' if language == 'english' else 'أولوية منخفضة' }}">{{ 'Low Priority'
+                        if language == 'english' else 'أولوية منخفضة' }}</option>
+                </select>
+
+                <input type="text" id="input_{{ option }}" name="input_{{ option }}" style="display: none" ;
+                    class="room_input" placeholder="Enter rooms"></select>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
 
-        <label type="hidden" id="developers" name="developers"  class='Easter_egg'> Dev: Muhammad Mbarak, Mohd Hasanul Alam and Shouq Almansoori</label>
+        <label type="hidden" id="developers" name="developers" class='Easter_egg'> Dev: Muhammad Mbarak, Mohd Hasanul
+            Alam and Shouq Almansoori</label>
         <div class="form-group">
-            <input type="hidden" id="language" name="language" value="{{ 'english' if language == 'english' else 'arabic' }}">
+            <input type="hidden" id="language" name="language"
+                value="{{ 'english' if language == 'english' else 'arabic' }}">
         </div>
 
-        <button type="submit" id = "generate_report" value = "generate_report">Generate Report</button>
+        <button type="submit" id="generate_report" value="generate_report">Generate Report</button>
 
         <div id="overlay" class="overlay">
-        <div class="loader-container">
-            <div class="loader"></div>
-            <div class="loader-text">Generating report...</div>
+            <div class="loader-container">
+                <div class="loader"></div>
+                <div class="loader-text">Generating report...</div>
+            </div>
         </div>
-    </div>
     </form>
-</div>
-   <script>
+    </div>
+    <script>
         function toggleDropdown(option) {
             const checkbox = document.getElementById(option);
             const dropdown = document.getElementById('dropdown_' + option);
             const input = document.getElementById('input_' + option);
-            
+
             if (checkbox.checked) {
                 dropdown.style.display = 'inline-block';
                 input.style.display = 'inline-block';
@@ -181,88 +242,88 @@
                 input.style.display = 'none';
             }
         }
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(function(checkbox) {
+            checkboxes.forEach(function (checkbox) {
                 toggleDropdown(checkbox.id);
             });
         });
- 
-        document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('auditForm');
-        const language = "{{ language }}";
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevents the default form submission behavior
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('auditForm');
+            const language = "{{ language }}";
 
-            const formData = new FormData(form);
-            const formObject = {};
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevents the default form submission behavior
 
-            formData.forEach((value, key) => {
-                formObject[key] = value;
-            });
-            const overlay = document.getElementById('overlay');
-            const status = document.getElementById('status');
-            
-            overlay.style.display = 'block';
+                const formData = new FormData(form);
+                const formObject = {};
 
-            console.log(formObject);
+                formData.forEach((value, key) => {
+                    formObject[key] = value;
+                });
+                const overlay = document.getElementById('overlay');
+                const status = document.getElementById('status');
 
-            fetch('/generate_report', {method: 'POST',
-            body: formData
-        })
-        .then(response => response.blob())
+                overlay.style.display = 'block';
 
-                .then(blob => {
-                   
-                    // Create a link element
-                    const link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    let filename = 'Manzili_Energy_Audit_Report';
-                if (language == 'arabic') {
-                    const reportNumber = document.querySelector('input[name="رقم_التقرير"]').value;
-                    if (reportNumber !== '') {
-                        filename += `_${reportNumber}`;
-                    }
-                } else {
-                    const reportNumber = document.querySelector('input[name="report_number"]').value;
-                    if (reportNumber !== '') {
-                        filename += `_${reportNumber}`;
-                    }
-                }
-                filename += '.docx';
-                link.download = filename;
+                console.log(formObject);
 
-                    
-                 overlay.style.display = 'none';
+                fetch('/generate_report', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.blob())
 
-                    // Append link to the body and trigger a click
-                    document.body.appendChild(link);
-                    link.click();
-                    
-                    // Clean up
-                    document.body.removeChild(link);
-                    
-                    fetch('/delete_file', {
+                    .then(blob => {
+
+                        // Create a link element
+                        const link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        let filename = 'Manzili_Energy_Audit_Report';
+                        if (language == 'arabic') {
+                            const reportNumber = document.querySelector('input[name="رقم_التقرير"]').value;
+                            if (reportNumber !== '') {
+                                filename += `_${reportNumber}`;
+                            }
+                        } else {
+                            const reportNumber = document.querySelector('input[name="report_number"]').value;
+                            if (reportNumber !== '') {
+                                filename += `_${reportNumber}`;
+                            }
+                        }
+                        filename += '.docx';
+                        link.download = filename;
+
+
+                        overlay.style.display = 'none';
+
+                        // Append link to the body and trigger a click
+                        document.body.appendChild(link);
+                        link.click();
+
+                        // Clean up
+                        document.body.removeChild(link);
+
+                        fetch('/delete_file', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({ filename: filename })
+                        })
                     })
-                })
-                .catch(error => {
-                    overlay.style.display = 'none';
-                    status.textContent = 'Error generating report: ' + error;
-});
+                    .catch(error => {
+                        overlay.style.display = 'none';
+                        status.textContent = 'Error generating report: ' + error;
+                    });
+
+            });
+
 
         });
-
-        
-    });
-   </script>
+    </script>
 
 </body>
+
 </html>
-
-
