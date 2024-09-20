@@ -73,8 +73,8 @@
         </div>
 
         <div class="form-group">
-            <label for="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">{{ 'Type of
-                Accommodation' if language == 'english' else 'نوع الإقامة' }}</label>
+            <label for="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">{{ 'Type of Accommodation'
+                if language == 'english' else 'نوع الإقامة' }}</label>
             <select id="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}"
                 name="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">
                 <option value="{{ 'Villa' if language == 'english' else 'فيلا' }}">{{ 'Villa' if language == 'english'
@@ -95,16 +95,16 @@
         </div>
 
         <div class="form-group">
-            <label for="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}">{{ 'Year of
-                Construction' if language == 'english' else 'سنة البناء' }}</label>
+            <label for="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}">{{ 'Year of Construction'
+                if language == 'english' else 'سنة البناء' }}</label>
             <input type="text" id="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}"
                 name="{{ 'year_of_construction' if language == 'english' else 'سنة_البناء' }}" min="1800"
                 placeholder="####" pattern="\d{4}" maxlength="4" minlength="4">
         </div>
 
         <div class="form-group">
-            <label for="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}">{{ 'Number of
-                Bedrooms' if language == 'english' else 'عدد غرف النوم' }}</label>
+            <label for="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}">{{ 'Number of Bedrooms'
+                if language == 'english' else 'عدد غرف النوم' }}</label>
             <input type="number" id="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}"
                 name="{{ 'number_of_bedrooms' if language == 'english' else 'عدد_غرف_النوم' }}" value="3" min="1">
         </div>
@@ -200,7 +200,8 @@
                     <option value="{{ 'High Priority' if language == 'english' else 'أولوية قصوى' }}">{{ 'High Priority'
                         if language == 'english' else 'أولوية قصوى' }}</option>
                     <option value="{{ 'Medium Priority' if language == 'english' else 'أولوية متوسطة' }}">{{ 'Medium
-                        Priority' if language == 'english' else 'أولوية متوسطة' }}</option>
+                        Priority'
+                        if language == 'english' else 'أولوية متوسطة' }}</option>
                     <option value="{{ 'Low Priority' if language == 'english' else 'أولوية منخفضة' }}">{{ 'Low Priority'
                         if language == 'english' else 'أولوية منخفضة' }}</option>
                 </select>
@@ -211,8 +212,6 @@
             {% endfor %}
         </div>
 
-        <label type="hidden" id="developers" name="developers" class='Easter_egg'> Dev: Muhammad Mbarak, Mohd Hasanul
-            Alam and Shouq Almansoori</label>
         <div class="form-group">
             <input type="hidden" id="language" name="language"
                 value="{{ 'english' if language == 'english' else 'arabic' }}">
@@ -242,19 +241,30 @@
                 input.style.display = 'none';
             }
         }
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(function (checkbox) {
-                toggleDropdown(checkbox.id);
-            });
-        });
 
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('auditForm');
             const language = "{{ language }}";
 
+            // Load form data from localStorage on page load
+            loadFormData();
+
+            // Save form data to localStorage whenever an input changes
+            form.addEventListener('input', saveFormData);
+
+            // Save form data to localStorage before closing/refreshing the tab
+            window.addEventListener('beforeunload', saveFormData);
+
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+                toggleDropdown(checkbox.id);
+            });
+
             form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevents the default form submission behavior
+                event.preventDefault();
+
+                // Clear the form data from localStorage after successful submission 
+                localStorage.removeItem('auditFormData');
 
                 const formData = new FormData(form);
                 const formObject = {};
@@ -263,7 +273,6 @@
                     formObject[key] = value;
                 });
                 const overlay = document.getElementById('overlay');
-                const status = document.getElementById('status');
 
                 overlay.style.display = 'block';
 
@@ -274,14 +283,11 @@
                     body: formData
                 })
                     .then(response => response.blob())
-
                     .then(blob => {
-
-                        // Create a link element
                         const link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         let filename = 'Manzili_Energy_Audit_Report';
-                        if (language == 'arabic') {
+                        if (language === 'arabic') {
                             const reportNumber = document.querySelector('input[name="رقم_التقرير"]').value;
                             if (reportNumber !== '') {
                                 filename += `_${reportNumber}`;
@@ -295,14 +301,10 @@
                         filename += '.docx';
                         link.download = filename;
 
-
                         overlay.style.display = 'none';
 
-                        // Append link to the body and trigger a click
                         document.body.appendChild(link);
                         link.click();
-
-                        // Clean up
                         document.body.removeChild(link);
 
                         fetch('/delete_file', {
@@ -315,12 +317,45 @@
                     })
                     .catch(error => {
                         overlay.style.display = 'none';
-                        status.textContent = 'Error generating report: ' + error;
+                        console.error('Error generating report:', error); // Use console.error for errors
                     });
-
             });
 
+            function saveFormData() {
+                const formData = new FormData(form);
+                const data = {};
 
+                for (const [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+
+                // Store checkboxes separately to preserve checked state
+                checkboxes.forEach(function (checkbox) {
+                    data[checkbox.id] = checkbox.checked;
+                });
+
+                localStorage.setItem('auditFormData', JSON.stringify(data));
+            }
+
+            function loadFormData() {
+                const storedData = localStorage.getItem('auditFormData');
+                if (storedData) {
+                    const data = JSON.parse(storedData);
+
+                    for (const key in data) {
+                        const element = form.querySelector(`[name="${key}"]`);
+                        if (element) {
+                            if (element.type === 'checkbox') {
+                                element.checked = data[key];
+                                // Trigger the toggleDropdown function to update display
+                                toggleDropdown(element.id);
+                            } else {
+                                element.value = data[key];
+                            }
+                        }
+                    }
+                }
+            }
         });
     </script>
 
