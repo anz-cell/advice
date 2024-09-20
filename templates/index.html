@@ -32,7 +32,7 @@
             <label for="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}">{{ 'Type of Audit' if
                 language == 'english' else 'نوع التدقيق' }}</label>
             <select id="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}"
-                name="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}">
+                name="{{ 'type_of_audit' if language == 'english' else 'نوع_التدقيق' }}" required>
                 <option value="{{ 'Home Visit' if language == 'english' else 'زيارة منزلية' }}">{{ 'Home Visit' if
                     language == 'english' else 'زيارة منزلية' }}</option>
                 <option value="{{ 'Video Call' if language == 'english' else 'مكالمة فيديو' }}">{{ 'Video Call' if
@@ -78,7 +78,7 @@
             <label for="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">{{ 'Type of Accommodation'
                 if language == 'english' else 'نوع الإقامة' }}</label>
             <select id="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}"
-                name="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}">
+                name="{{ 'type_of_accommodation' if language == 'english' else 'نوع_الإقامة' }}" required>
                 <option value="{{ 'Villa' if language == 'english' else 'فيلا' }}">{{ 'Villa' if language == 'english'
                     else 'فيلا' }}</option>
                 <option value="{{ 'Mansion' if language == 'english' else 'قصر' }}">{{ 'Mansion' if language ==
@@ -133,7 +133,7 @@
             <label for="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}">{{ 'Outdoor Garden' if
                 language == 'english' else 'حديقة خارجية' }}</label>
             <select id="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}"
-                name="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}">
+                name="{{ 'outdoor_garden' if language == 'english' else 'حديقة_خارجية' }}" required>
                 <option value="{{ 'None' if language == 'english' else 'لا يوجد' }}">{{ 'None' if language == 'english'
                     else 'لا يوجد' }}</option>
                 <option value="{{ 'Small' if language == 'english' else 'صغير' }}">{{ 'Small' if language == 'english'
@@ -147,7 +147,7 @@
             <label for="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}">{{ 'Swimming Pool' if language
                 == 'english' else 'حمام سباحة' }}</label>
             <select id="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}"
-                name="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}">
+                name="{{ 'swimming_pool' if language == 'english' else 'حمام_سباحة' }}" required>
                 <option value="{{ 'No' if language == 'english' else 'لا يوجد' }}">{{ 'No' if language == 'english' else
                     'لا يوجد' }}</option>
                 <option value="{{ 'Yes' if language == 'english' else 'يوجد' }}">{{ 'Yes' if language == 'english' else
@@ -160,7 +160,7 @@
                 'english' else 'أنظمة تكييف' }}</label>
             <textarea id="{{ 'ac_systems' if language == 'english' else 'أنظمة_تكييف' }}"
                 name="{{ 'ac_systems' if language == 'english' else 'أنظمة_تكييف' }}"
-                placeholder="Enter AC systems"></textarea>
+                placeholder="Enter AC systems" required></textarea>
         </div>
 
         <div class="form-group">
@@ -168,7 +168,7 @@
                 else 'إضاءة' }}</label>
             <textarea id="{{ 'lighting' if language == 'english' else 'إضاءة' }}"
                 name="{{ 'lighting' if language == 'english' else 'إضاءة' }}"
-                placeholder="Enter lighting details"></textarea>
+                placeholder="Enter lighting details" required></textarea>
         </div>
 
         <div class="form-group">
@@ -176,7 +176,7 @@
                 'english' else 'حنفيات المياه' }}</label>
             <textarea id="{{ 'water_taps' if language == 'english' else 'حنفيات_المياه' }}"
                 name="{{ 'water_taps' if language == 'english' else 'حنفيات_المياه' }}"
-                placeholder="Enter water taps details"></textarea>
+                placeholder="Enter water taps details" required></textarea>
         </div>
 
         <div class="form-group">
@@ -184,7 +184,7 @@
                 language == 'english' else 'سخانات المياه' }}</label>
             <textarea id="{{ 'water_heaters' if language == 'english' else 'سخانات_المياه' }}"
                 name="{{ 'water_heaters' if language == 'english' else 'سخانات_المياه' }}"
-                placeholder="Enter water heaters details"></textarea>
+                placeholder="Enter water heaters details" required></textarea>
         </div>
 
         <div class="form-group">
