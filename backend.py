@@ -5,6 +5,7 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import google.generativeai as genai
 import os
+import re
 from database import Recommendation_English , Recommendation_Arabic
 
 os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
@@ -23,18 +24,18 @@ def generate_recommendations_english(data):
         prompt = f"""
         Based on the following energy audit data, provide 5-7 specific recommendations for saving power and improving energy efficiency:
 
-            Accommodation: {data['type_of_accommodation']}
-            number of residents: {data['number_of_residents']}
-            Year of Construction: {data['year_of_construction']}
-            Number of Bedrooms: {data['number_of_bedrooms']}
-            Number of Floors: {data['number_of_floors']}
-            Outdoor Garden: {data['outdoor_garden']}
-            Swimming Pool: {data['swimming_pool']}
-            Air Conditioning Systems: {data['ac_systems']}
-            Lighting: {data['lighting']}
-            Water Taps: {data['water_taps']}
-            Water Heaters: {data['water_heaters']}
-            Other Notes: {data['other']}'
+            Accommodation: {data.get('type_of_accommodation')}
+            number of residents: {data.get('number_of_residents')}
+            Year of Construction: {data.get('year_of_construction')}
+            Number of Bedrooms: {data.get('number_of_bedrooms')}
+            Number of Floors: {data.get('number_of_floors')}
+            Outdoor Garden: {data.get('outdoor_garden')}
+            Swimming Pool: {data.get('swimming_pool')}
+            Air Conditioning Systems: {data.get('ac_systems')}
+            Lighting: {data.get('lighting')}
+            Water Taps: {data.get('water_taps')}
+            Water Heaters: {data.get('water_heaters')}
+            Other Notes: {data.get('other')}
 
         Please provide actionable and specific recommendations, benefits andimplementation. Format the recommendations as a bullet point list in the following format.
         AC-System.:
@@ -145,7 +146,7 @@ def create_report_english(data, recommendations):
         title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         # Report Number
-        report_number_paragraph = doc.add_paragraph(f"{('Report Number')}: {data['report_number']}")
+        report_number_paragraph = doc.add_paragraph(f"{('Report Number')}: {data.get('report_number')}")
         report_number_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         # Overview
@@ -210,7 +211,7 @@ def create_report_english(data, recommendations):
         for key in ['outdoor_garden', 'swimming_pool', 'ac_systems', 'lighting', 'water_taps', 'water_heaters']:
             row_cells = notes_table.add_row().cells
             row_cells[0].text = (key.replace('_', ' ').title())
-            row_cells[1].text = data[key]
+            row_cells[1].text = data.get(key)
             for cell in row_cells:
                 for paragraph in cell.paragraphs:
                     set_ltr(paragraph)
