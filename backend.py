@@ -25,17 +25,17 @@ def generate_recommendations_english(data):
         Based on the following energy audit data, provide 5-7 specific recommendations for saving power and improving energy efficiency:
 
             Accommodation: {data.get('type_of_accommodation')}
-            number of residents: {data['number_of_residents']}
-            Year of Construction: {data['year_of_construction']}
-            Number of Bedrooms: {data['number_of_bedrooms']}
-            Number of Floors: {data['number_of_floors']}
-            Outdoor Garden: {data['outdoor_garden']}
-            Swimming Pool: {data['swimming_pool']}
-            Air Conditioning Systems: {data['ac_systems']}
-            Lighting: {data['lighting']}
-            Water Taps: {data['water_taps']}
-            Water Heaters: {data['water_heaters']}
-            Other Notes: {data['other']}'
+            number of residents: {data.get('number_of_residents')}
+            Year of Construction: {data.get('year_of_construction')}
+            Number of Bedrooms: {data.get('number_of_bedrooms')}
+            Number of Floors: {data.get('number_of_floors')}
+            Outdoor Garden: {data.get('outdoor_garden')}
+            Swimming Pool: {data.get('swimming_pool')}
+            Air Conditioning Systems: {data.get('ac_systems')}
+            Lighting: {data.get('lighting')}
+            Water Taps: {data.get('water_taps')}
+            Water Heaters: {data.get('water_heaters')}
+            Other Notes: {data.get('other')}
 
         Please provide actionable and specific recommendations, benefits andimplementation. Format the recommendations as a bullet point list in the following format.
         AC-System.:
