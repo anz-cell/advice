@@ -24,7 +24,7 @@ def generate_recommendations_english(data):
         prompt = f"""
         Based on the following energy audit data, provide 5-7 specific recommendations for saving power and improving energy efficiency:
 
-            Accommodation: {data['type_of_accommodation'] or data['نوع_الإقامة']}
+            Accommodation: {data.get('type_of_accommodation')}
             number of residents: {data['number_of_residents']}
             Year of Construction: {data['year_of_construction']}
             Number of Bedrooms: {data['number_of_bedrooms']}
