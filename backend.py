@@ -1,6 +1,6 @@
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-from docx.shared import Inches
+from docx.shared import  Inches
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import google.generativeai as genai
@@ -50,9 +50,9 @@ def generate_recommendations_english(data):
         """
 
         response = model.generate_content(prompt)
-        cleaned_response = response.text.replace("*", "")
-        cleaned_response = re.sub(r'\[.*?\]', '', cleaned_response) 
-        return cleaned_response
+        return response.text
+
+
 
 def set_cell_shading( cell, color):
         shading = OxmlElement('w:shd')
@@ -252,7 +252,7 @@ def create_report_english(data, recommendations):
             for key, value in Recommendation_English.items():
                 if key in data:
                     if data[f'dropdown_{key}'] == priority:
-                        string = fr'{value[0]} in {data[f"input_{key}"]}'
+                        string = fr'{value[0]} in {data[f'input_{key}']}'
                         row_cells = recommendations_table.add_row().cells
                         row_cells[0].text = (string)
                         row_cells[1].text = (value[1])
@@ -472,7 +472,7 @@ def create_report_arabic( data, recommendations):
             for key, value in Recommendation_Arabic.items():
                 if key in data:
                     if data[f'dropdown_{key}'] == priority:
-                        string = fr'{value[0]} في {data[f"input_{key}"]}'
+                        string = f'{value[0]} في {data[f'input_{key}']}'
                         row_cells = recommendations_table.add_row().cells
                         row_cells[0].text = (string)
                         row_cells[1].text = (value[1])

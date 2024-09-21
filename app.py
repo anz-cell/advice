@@ -22,7 +22,6 @@ def index(language):
     else:
         Recommendations = list(Recommendation_English.keys())
     return render_template('index.html', language=language, Recommendation = Recommendations)
-
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
         data = request.form.to_dict()
@@ -47,4 +46,4 @@ def delete_file():
         #since the function doesnt return it will say there is a warning it doesnt return but we dont want to return anything so its fine, the warning doesnt cause any problems.
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
