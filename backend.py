@@ -183,9 +183,9 @@ def create_report_english(data, recommendations):
         for field_pair in audit_fields:
             row_cells = audit_table.add_row().cells
             row_cells[0].text = (field_pair[0].replace('_', ' ').title())
-            row_cells[1].text = data.get(field_pair[0])
+            row_cells[1].text = data[field_pair[0]]
             row_cells[2].text = (field_pair[1].replace('_', ' ').title())
-            row_cells[3].text = data.get(field_pair[1])
+            row_cells[3].text = data[field_pair[1]]
             for cell in row_cells:
                 for paragraph in cell.paragraphs:
                     set_ltr(paragraph)
