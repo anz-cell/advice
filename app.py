@@ -10,6 +10,7 @@ app = Flask(__name__, static_url_path='/static')
 # Configure Google API
 os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
 genai.configure(api_key=os.environ['API_KEY'])
+realLanguage = ""
 @app.route('/')
 def language_selection():
     return render_template('language_selection.html')
@@ -18,13 +19,15 @@ def language_selection():
 def index(language):
     if language == "arabic":
         Recommendations = list(Recommendation_Arabic.keys())
+        realLanguage = language
     else:
         Recommendations = list(Recommendation_English.keys())
+        realLanguage = language
     return render_template('index.html', language=language, Recommendation = Recommendations)
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
         data = request.form.to_dict()
-        if language == "arabic":
+        if realLanguage == "arabic":
             recommendations = generate_recommendations_arabic(data)
             create_report_arabic(data, recommendations)
             filename = f'Manzili_Energy_Audit_Report_{data["رقم_التقرير"]}.docx'
