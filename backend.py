@@ -146,7 +146,7 @@ def create_report_english(data, recommendations):
         title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         # Report Number
-        report_number_paragraph = doc.add_paragraph(f"{('Report Number')}: {data['report_number']}")
+        report_number_paragraph = doc.add_paragraph(f"{('Report Number')}: {data.get('report_number')}")
         report_number_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         # Overview
