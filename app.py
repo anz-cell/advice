@@ -16,7 +16,7 @@ def language_selection():
 
 @app.route('/index/<language>')
 def index(language):
-    if language == "arabic":
+    if language == 'arabic':
         Recommendations = list(Recommendation_Arabic.keys())
     else:
         Recommendations = list(Recommendation_English.keys())
@@ -24,7 +24,7 @@ def index(language):
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
         data = request.form.to_dict()
-        if language == "arabic":
+        if language == 'arabic':
             recommendations = generate_recommendations_arabic(data)
             create_report_arabic(data, recommendations)
             filename = f'Manzili_Energy_Audit_Report_{data["رقم_التقرير"]}.docx'
