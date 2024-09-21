@@ -31,7 +31,7 @@ def generate_report():
             recommendations = generate_recommendations_arabic(data)
             create_report_arabic(data, recommendations)
             filename = f'Manzili_Energy_Audit_Report_{data["رقم_التقرير"]}.docx'
-        else:
+        elif language == 'english':
             recommendations = generate_recommendations_english(data)
             create_report_english(data, recommendations)
             filename = f'Manzili_Energy_Audit_Report_{data["report_number"]}.docx'
