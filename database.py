@@ -6,7 +6,7 @@
     # Hyperlink if available    ]
 
 Recommendation_English = {
-    'Temperature 24': [
+    'temperature 24': [
         'Maintain the temperature at 24°C',
         'You can reduce air conditioner consumption by 5% by increasing the temperature by one degree Celsius',
         'You can do it yourself /DIY'
@@ -28,13 +28,13 @@ Recommendation_English = {
         'Replacing lighting with LED lights can save more than 50% of the home\'s lighting consumption',
         'You can do it yourself /DIY'
     ],
-    '2* Air Conditioning': [
+    '2star Air Conditioning': [
         'Consider replacing 2-star air conditioners with 4 or 5-star rated air conditioners',
         'Replacing the device with a more efficient air conditioner can reduce air conditioning consumption by 20%',
         'Visit a retailer or distributor and ensure installation warranty \n Click for list of AC distributors',
         'https://docs.google.com/spreadsheets/d/1rqwzN-D2RJ2ac2QbBIL9fftC_7G5_BFo/edit?gid=2044373242#gid=2044373242'
     ],
-    'Solar Water Heater': [
+    'solar water heater': [
         'Consider replacing electric water heaters with solar-powered water heater systems',
         'Replacing electric water heaters with solar water heater systems can reduce electricity consumption by more than 30%',
         'Contact water heater distributors \nClick for list of hot water distributors',

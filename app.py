@@ -25,12 +25,12 @@ def index(language):
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
         data = request.form.to_dict()
-        language = data.pop('language').strip().lower()
+        language = data.pop('language')
         if language == 'arabic':
             recommendations = generate_recommendations_arabic(data)
             create_report_arabic(data, recommendations)
             filename = f'Manzili_Energy_Audit_Report_{data["رقم_التقرير"]}.docx'
-        elif language == 'english':
+        else:
             recommendations = generate_recommendations_english(data)
             create_report_english(data, recommendations)
             filename = f'Manzili_Energy_Audit_Report_{data["report_number"]}.docx'
@@ -46,4 +46,4 @@ def delete_file():
         #since the function doesnt return it will say there is a warning it doesnt return but we dont want to return anything so its fine, the warning doesnt cause any problems.
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
