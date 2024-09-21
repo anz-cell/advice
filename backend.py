@@ -302,7 +302,7 @@ def create_report_english(data, recommendations):
 
 
 
-def generate_recommendations_arabic( data):
+def generate_recommendations_arabic(data):
         if model is None:
             return "تعذر إنشاء التوصيات بسبب خطأ في تهيئة النموذج."
 
@@ -339,7 +339,7 @@ def generate_recommendations_arabic( data):
         response = model.generate_content(prompt)
         return response.text
 
-def create_report_arabic( data, recommendations):
+def create_report_arabic(data, recommendations):
         doc = Document()
 
         # Add logos to the header
