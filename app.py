@@ -26,12 +26,12 @@ def generate_report():
         data = request.form.to_dict()
         language = data.pop('language')
         if language == 'arabic':
-            recommendations = generate_recommendations_arabic(data)
-            create_report_arabic(data, recommendations)
-            filename = f'Manzili_Energy_Audit_Report_{data["رقم_التقرير"]}.docx'
-        else:
             recommendations = generate_recommendations_english(data)
             create_report_english(data, recommendations)
+            filename = f'Manzili_Energy_Audit_Report_{data["رقم_التقرير"]}.docx'
+        else:
+            recommendations = generate_recommendations_arabic(data)
+            create_report_arabic(data, recommendations)
             filename = f'Manzili_Energy_Audit_Report_{data["report_number"]}.docx'
         return send_file(filename, as_attachment=True, download_name=filename)
 
