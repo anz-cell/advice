@@ -26,7 +26,6 @@ def index(language):
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
         data = request.form.to_dict()
-        language = data.pop('language')
         if language == 'arabic':
             recommendations = generate_recommendations_arabic(data)
             create_report_arabic(data, recommendations)
