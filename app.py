@@ -5,11 +5,13 @@ from docx.shared import Inches
 import google.generativeai as genai
 from backend import generate_recommendations_english, create_report_english, generate_recommendations_arabic,create_report_arabic
 from database import Recommendation_English,Recommendation_Arabic
+import logging
 
 app = Flask(__name__, static_url_path='/static')
 # Configure Google API
 os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
 genai.configure(api_key=os.environ['API_KEY'])
+
 @app.route('/')
 def language_selection():
     return render_template('language_selection.html')

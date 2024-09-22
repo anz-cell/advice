@@ -252,7 +252,7 @@ def create_report_english(data, recommendations):
             for key, value in Recommendation_English.items():
                 if key in data:
                     if data[f'dropdown_{key}'] == priority:
-                        string = fr'{value[0]} in {data[f"input_{key}"]}'
+                        string = fr'{value[0]} in {data[f'input_{key}']}'
                         row_cells = recommendations_table.add_row().cells
                         row_cells[0].text = (string)
                         row_cells[1].text = (value[1])
@@ -302,7 +302,7 @@ def create_report_english(data, recommendations):
 
 
 
-def generate_recommendations_arabic(data):
+def generate_recommendations_arabic( data):
         if model is None:
             return "تعذر إنشاء التوصيات بسبب خطأ في تهيئة النموذج."
 
@@ -339,7 +339,7 @@ def generate_recommendations_arabic(data):
         response = model.generate_content(prompt)
         return response.text
 
-def create_report_arabic(data, recommendations):
+def create_report_arabic( data, recommendations):
         doc = Document()
 
         # Add logos to the header
@@ -472,7 +472,7 @@ def create_report_arabic(data, recommendations):
             for key, value in Recommendation_Arabic.items():
                 if key in data:
                     if data[f'dropdown_{key}'] == priority:
-                        string = f'{value[0]} في {data[f"input_{key}"]}'
+                        string = f'{value[0]} في {data[f'input_{key}']}'
                         row_cells = recommendations_table.add_row().cells
                         row_cells[0].text = (string)
                         row_cells[1].text = (value[1])
