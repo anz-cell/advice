@@ -189,9 +189,42 @@
         document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('auditForm');
         const language = "{{ language }}";
+        const inputs = form.querySelectorAll('input, select, textarea');
+
+    
+    const savedFormData = JSON.parse(localStorage.getItem('auditFormData'));
+    if (savedFormData) {
+        for (const [key, value] of Object.entries(savedFormData)) {
+            const input = document.querySelector(`[name="${key}"]`);
+            if (input) {
+                input.value = value;
+            }
+        }
+    }
+
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            saveFormData();  
+        });
+    });
+
+    function saveFormData() {
+        const formData = new FormData(form);
+        const formObject = {};
+
+        formData.forEach((value, key) => {
+            formObject[key] = value;
+        });
+
+        
+        localStorage.setItem('auditFormData', JSON.stringify(formObject));
+
+        console.log('Form data saved:', formObject);
+    }
 
         form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevents the default form submission behavior
+            event.preventDefault();
 
             const formData = new FormData(form);
             const formObject = {};
