@@ -259,6 +259,41 @@
         
     });
    </script>
+    <script>
+        // Function to save the value of a single element to localStorage
+function saveInput(element) {
+  localStorage.setItem(element.id, element.value); // Store the value in localStorage
+}
+
+// Function to load and autofill values for all input, select, and textarea elements
+function loadAllInputs() {
+  var elements = document.querySelectorAll('input, select, textarea');
+  
+  elements.forEach(function(element) {
+    var savedValue = localStorage.getItem(element.id);
+    if (savedValue !== null) {
+      element.value = savedValue; // Autofill the element with the saved value
+    }
+
+    // Add event listener to save the value when the user types or changes the input
+    element.addEventListener('input', function() {
+      saveInput(element); // Save the value automatically when the user types
+    });
+
+    // For <select> elements, listen to the 'change' event to save the selected value
+    element.addEventListener('change', function() {
+      saveInput(element); // Save the value when selection changes
+    });
+  });
+}
+
+// Call loadAllInputs when the page loads to autofill all elements
+window.onload = function() {
+  loadAllInputs();
+};
+
+    </script>
+    
 
 </body>
 </html>
