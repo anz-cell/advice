@@ -6,6 +6,7 @@ from docx.oxml.ns import qn
 import google.generativeai as genai
 import os
 from database import Recommendation_English , Recommendation_Arabic
+import re
 
 os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
 genai.configure(api_key=os.environ['API_KEY'])
@@ -368,6 +369,7 @@ def create_report_arabic( data, recommendations):
         # Overview
         overview_heading = doc.add_heading('نظرة عامة', level=2)
         set_rtl(overview_heading)
+        overview_heading.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         overview_paragraph = doc.add_paragraph(
             "يُلخص هذا التقرير النتائج والتوصيات بعد تدقيق الطاقة الذي أُجري في منزلك كجزء من خدمة استشارات طاقة منزلي في رأس الخيمة. الهدف من التدقيق هو المساعدة في تقليل فواتير الكهرباء والمياه وجعل منزلك أكثر راحة وحداثة."
         )
@@ -376,8 +378,8 @@ def create_report_arabic( data, recommendations):
 
         # Audit Details
         audit_details_heading = doc.add_heading('تفاصيل التدقيق', level=2)
-        audit_details_heading.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         set_rtl(audit_details_heading)
+        audit_details_heading.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         audit_table = doc.add_table(rows=1, cols=4)
         hdr_cells = audit_table.rows[0].cells
         hdr_cells[0].text = 'التفاصيل'
