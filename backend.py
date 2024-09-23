@@ -201,7 +201,7 @@ def create_report_english(data, recommendations):
         hdr_cells[1].text = ('Details')
 
         for cell in hdr_cells:
-            set_cell_shading(cell, "D3D3D3")  # Set header cell color to grey
+            set_cell_shading(cell, "D3D3D3")
             for paragraph in cell.paragraphs:
                 set_ltr(paragraph)
                 paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
