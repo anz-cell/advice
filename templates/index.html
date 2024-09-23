@@ -260,6 +260,9 @@
     });
    </script>
     <script>
+document.addEventListener('DOMContentLoaded', function() {
+  loadAllInputs();
+});
 function saveInput(element) {
   localStorage.setItem(element.id, element.value); 
 }
@@ -283,9 +286,6 @@ function loadAllInputs() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  loadAllInputs();
-});
 
     </script>
     
