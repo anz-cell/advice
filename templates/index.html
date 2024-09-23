@@ -326,9 +326,6 @@
             loadAllInputs();
         });
         function saveInput(element) {
-            if (element.type === 'checkbox') {
-                localStorage.setItem(element.id, element.checked);
-            }
             localStorage.setItem(element.id, element.value);
         }
 
@@ -337,10 +334,7 @@
 
             elements.forEach(function (element) {
                 var savedValue = localStorage.getItem(element.id);
-                if (element.type === 'checkbox') {
-                    element.checked = (savedValue === 'true');
-                }
-                else if (savedValue !== null) {
+                if (savedValue !== null) {
                     element.value = savedValue;
                 }
 
