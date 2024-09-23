@@ -50,7 +50,9 @@ def generate_recommendations_english(data):
         """
 
         response = model.generate_content(prompt)
-        return response.text
+        cleaned_response = response.text.replace("*", "")
+        cleaned_response = re.sub(r'\[.*?\]', '', cleaned_response) 
+        return cleaned_response
 
 
 
