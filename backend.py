@@ -448,7 +448,7 @@ def create_report_arabic( data, recommendations):
         hdr_cells[2].text = ('التنفيذ')
         for cell in hdr_cells:
             set_cell_shading(cell, "D3D3D3")  # Set header cell color to grey
-            for paragraph in reversed(cell.paragraphs):
+            for paragraph in cell.paragraphs:
                 set_ltr(paragraph)
                 paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
             set_borders(cell)
@@ -463,7 +463,7 @@ def create_report_arabic( data, recommendations):
             set_cell_shading(row_cells[0], "D3D3D3")
             for cell in row_cells:
                 set_cell_shading(cell, "D3D3D3")  # Set header cell color to grey
-                for paragraph in reversed(cell.paragraphs):
+                for paragraph in cell.paragraphs:
                     set_ltr(paragraph)
                     paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
                 set_borders(cell)
