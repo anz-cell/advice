@@ -6,7 +6,6 @@ from docx.oxml.ns import qn
 import google.generativeai as genai
 import os
 from database import Recommendation_English , Recommendation_Arabic
-import re
 
 os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
 genai.configure(api_key=os.environ['API_KEY'])
@@ -51,9 +50,7 @@ def generate_recommendations_english(data):
         """
 
         response = model.generate_content(prompt)
-        cleaned_response = response.text.replace("*", "")
-        cleaned_response = re.sub(r'\[.*?\]', '', cleaned_response) 
-        return cleaned_response
+        return response.text
 
 
 
@@ -204,7 +201,7 @@ def create_report_english(data, recommendations):
         hdr_cells[1].text = ('Details')
 
         for cell in hdr_cells:
-            set_cell_shading(cell, "D3D3D3")
+            set_cell_shading(cell, "D3D3D3")  # Set header cell color to grey
             for paragraph in cell.paragraphs:
                 set_ltr(paragraph)
                 paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
@@ -255,7 +252,7 @@ def create_report_english(data, recommendations):
             for key, value in Recommendation_English.items():
                 if key in data:
                     if data[f'dropdown_{key}'] == priority:
-                        string = fr'{value[0]} in {data[f"input_{key}"]}'
+                        string = fr'{value[0]} in {data[f'input_{key}']}'
                         row_cells = recommendations_table.add_row().cells
                         row_cells[0].text = (string)
                         row_cells[1].text = (value[1])
@@ -369,7 +366,6 @@ def create_report_arabic( data, recommendations):
         # Overview
         overview_heading = doc.add_heading('نظرة عامة', level=2)
         set_rtl(overview_heading)
-        overview_heading.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         overview_paragraph = doc.add_paragraph(
             "يُلخص هذا التقرير النتائج والتوصيات بعد تدقيق الطاقة الذي أُجري في منزلك كجزء من خدمة استشارات طاقة منزلي في رأس الخيمة. الهدف من التدقيق هو المساعدة في تقليل فواتير الكهرباء والمياه وجعل منزلك أكثر راحة وحداثة."
         )
@@ -378,8 +374,8 @@ def create_report_arabic( data, recommendations):
 
         # Audit Details
         audit_details_heading = doc.add_heading('تفاصيل التدقيق', level=2)
-        set_rtl(audit_details_heading)
         audit_details_heading.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
+        set_rtl(audit_details_heading)
         audit_table = doc.add_table(rows=1, cols=4)
         hdr_cells = audit_table.rows[0].cells
         hdr_cells[0].text = 'التفاصيل'
@@ -453,7 +449,7 @@ def create_report_arabic( data, recommendations):
         for cell in hdr_cells:
             set_cell_shading(cell, "D3D3D3")  # Set header cell color to grey
             for paragraph in cell.paragraphs:
-                set_rtl(paragraph)
+                set_ltr(paragraph)
                 paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
             set_borders(cell)
         i+=1
@@ -468,7 +464,7 @@ def create_report_arabic( data, recommendations):
             for cell in row_cells:
                 set_cell_shading(cell, "D3D3D3")  # Set header cell color to grey
                 for paragraph in cell.paragraphs:
-                    set_rtl(paragraph)
+                    set_ltr(paragraph)
                     paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
                 set_borders(cell)
             i+=1
@@ -476,7 +472,7 @@ def create_report_arabic( data, recommendations):
             for key, value in Recommendation_Arabic.items():
                 if key in data:
                     if data[f'dropdown_{key}'] == priority:
-                        string = f'{value[0]} في {data[f"input_{key}"]}'
+                        string = f'{value[0]} في {data[f'input_{key}']}'
                         row_cells = recommendations_table.add_row().cells
                         row_cells[0].text = (string)
                         row_cells[1].text = (value[1])
