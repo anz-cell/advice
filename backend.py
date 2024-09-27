@@ -1,11 +1,12 @@
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-from docx.shared import Inches
+from docx.shared import  Inches
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import google.generativeai as genai
 import os
 from database import Recommendation_English , Recommendation_Arabic
+import re
 
 os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
 genai.configure(api_key=os.environ['API_KEY'])
@@ -36,8 +37,9 @@ def generate_recommendations_english(data):
             Water Heaters: {data['water_heaters']}
             Other Notes: {data['other']}'
 
-        Please provide actionable and specific recommendations, benefits andimplementation. Format the recommendations as a bullet point list in the following format.
-        AC-System.:
+        Please provide actionable and specific recommendations, benefits and implementation. Format the recommendations as a bullet point list in the following format.
+        AC-System:
+        
         Lighting:
         
         Water Taps:
@@ -46,11 +48,13 @@ def generate_recommendations_english(data):
 
         Other Observations:
         
-        Do not write anything before this and dont bold any sentences/words with **. Use - to bullet and dont use brackets anywhere
+        Do not write anything before this and dont bold any sentences/words with **. Do not use '-' to bullet instead use numbers and use alphabets for sub points and dont use brackets anywhere
         """
-
+        
         response = model.generate_content(prompt)
-        return response.text
+        cleaned_response = response.text.replace("*", "")
+        cleaned_response = re.sub(r'\[.*?\]', '', cleaned_response) 
+        return cleaned_response
 
 
 
@@ -73,7 +77,7 @@ def set_rtl( paragraph):
         bidi = OxmlElement('w:bidi')
         bidi.set(qn('w:val'), '1')
         pPr.append(bidi)
-        paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
+        paragraph.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
 
 def set_borders( cell):
         tc = cell._element
@@ -201,7 +205,7 @@ def create_report_english(data, recommendations):
         hdr_cells[1].text = ('Details')
 
         for cell in hdr_cells:
-            set_cell_shading(cell, "D3D3D3")  # Set header cell color to grey
+            set_cell_shading(cell, "D3D3D3")
             for paragraph in cell.paragraphs:
                 set_ltr(paragraph)
                 paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
@@ -302,7 +306,7 @@ def create_report_english(data, recommendations):
 
 
 
-def generate_recommendations_arabic( data):
+def generate_recommendations_arabic(data):
         if model is None:
             return "تعذر إنشاء التوصيات بسبب خطأ في تهيئة النموذج."
 
@@ -333,13 +337,15 @@ def generate_recommendations_arabic( data):
         
         ملاحظات أخرى:
         
-        لا تكتب أي شيء قبل هذا ولا تجعل أي جمل/كلمات غامقة. استخدم - للتنقيط ولا تستخدم أقواس في أي مكان    
+        لا تكتب أي شيء قبل ذلك ولا تكتب أي جمل/كلمات بالخط العريض**. لا تستخدم "-" للرصاص. بدلاً من ذلك، استخدم الأرقام العربية مثل١ و٢ واستخدام الحروف الهجائية للنقاط الفرعية ولا تستخدم الأقواس في أي مكان.
         """
 
         response = model.generate_content(prompt)
-        return response.text
+        cleaned_response = response.text.replace("*", "")
+        cleaned_response = re.sub(r'\[.*?\]', '', cleaned_response) 
+        return cleaned_response
 
-def create_report_arabic( data, recommendations):
+def create_report_arabic(data, recommendations):
         doc = Document()
 
         # Add logos to the header
@@ -365,17 +371,16 @@ def create_report_arabic( data, recommendations):
 
         # Overview
         overview_heading = doc.add_heading('نظرة عامة', level=2)
-        set_rtl(overview_heading)
+        overview_heading.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         overview_paragraph = doc.add_paragraph(
             "يُلخص هذا التقرير النتائج والتوصيات بعد تدقيق الطاقة الذي أُجري في منزلك كجزء من خدمة استشارات طاقة منزلي في رأس الخيمة. الهدف من التدقيق هو المساعدة في تقليل فواتير الكهرباء والمياه وجعل منزلك أكثر راحة وحداثة."
         )
-        #set_rtl(overview_paragraph)
+        #set_ltr(overview_paragraph)
         set_paragraph_spacing(overview_paragraph)
 
         # Audit Details
         audit_details_heading = doc.add_heading('تفاصيل التدقيق', level=2)
-        audit_details_heading.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
-        set_rtl(audit_details_heading)
+        audit_details_heading.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         audit_table = doc.add_table(rows=1, cols=4)
         hdr_cells = audit_table.rows[0].cells
         hdr_cells[0].text = 'التفاصيل'
@@ -400,9 +405,9 @@ def create_report_arabic( data, recommendations):
 
         for field_pair in audit_fields:
             row_cells = audit_table.add_row().cells
-            row_cells[1].text = field_pair[0].replace('_', ' ').title()
+            row_cells[1].text = field_pair[0].replace('-', ' ').title()
             row_cells[0].text = data[field_pair[0]]
-            row_cells[3].text = field_pair[1].replace('_', ' ').title()
+            row_cells[3].text = field_pair[1].replace('-', ' ').title()
             row_cells[2].text = data[field_pair[1]]
             for cell in row_cells:
                 for paragraph in cell.paragraphs:
@@ -414,7 +419,7 @@ def create_report_arabic( data, recommendations):
 
         # Notes
         notes_heading = doc.add_heading('الملاحظات', level=2)
-        set_rtl(notes_heading)
+        notes_heading.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         notes_table = doc.add_table(rows=1, cols=2)
         hdr_cells = notes_table.rows[0].cells
         hdr_cells[1].text = 'العنصر'
@@ -429,7 +434,7 @@ def create_report_arabic( data, recommendations):
 
         for key in ['حديقة_خارجية', 'حمام_سباحة', 'أنظمة_تكييف', 'إضاءة', 'حنفيات_المياه', 'سخانات_المياه']:
             row_cells = notes_table.add_row().cells
-            row_cells[1].text = key.replace('_', ' ').title()
+            row_cells[1].text = key.replace('-', ' ').title()
             row_cells[0].text = data[key]
             for cell in row_cells:
                 for paragraph in cell.paragraphs:
@@ -440,10 +445,11 @@ def create_report_arabic( data, recommendations):
 
         # Recommendations
         i = 0
-        recommendations_heading = doc.add_heading((' التوصية'), level=2)
+        recommendations_heading = doc.add_heading(('التوصية'), level=2)
+        recommendations_heading.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         recommendations_table = doc.add_table(rows=1, cols=3)
         hdr_cells = recommendations_table.rows[0].cells
-        hdr_cells[0].text = ('التوصية') 
+        hdr_cells[0].text = ('التوصية')
         hdr_cells[1].text = ('الفوائد')
         hdr_cells[2].text = ('التنفيذ')
         for cell in hdr_cells:
@@ -462,7 +468,7 @@ def create_report_arabic( data, recommendations):
             set_paragraph_spacing(paragraph)
             set_cell_shading(row_cells[0], "D3D3D3")
             for cell in row_cells:
-                set_cell_shading(cell, "D3D3D3")  # Set header cell color to grey
+                set_cell_shading(cell, "D3D3D3") 
                 for paragraph in cell.paragraphs:
                     set_ltr(paragraph)
                     paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
@@ -483,20 +489,27 @@ def create_report_arabic( data, recommendations):
                         else:
                             row_cells[2].text = (value[2])
                         for cell in row_cells:
-                            set_borders(cell)
+                            for paragraph in cell.paragraphs:
+                                set_rtl(paragraph) 
+                            set_borders(cell)  
                         i+=1 
                         
-                        
+            for row in recommendations_table.rows[1:]:
+                implementation = row.cells[2].text  # Store implementation
+                row.cells[2].text = row.cells[0].text # Move first to last
+                row.cells[1].text = row.cells[1].text # Keep the middle column as is
+                row.cells[0].text = implementation
+                                  
         # AI-Generated Recommendations
         ai_recommendations_heading = doc.add_heading('التوصيات المولّدة بواسطة الذكاء الاصطناعي', level=2)
-        set_rtl(ai_recommendations_heading)
+        ai_recommendations_heading.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         ai_recommendations = doc.add_paragraph(recommendations)
         set_rtl(ai_recommendations)
         set_paragraph_spacing(ai_recommendations)
 
         # Disclaimer
         disclaimer_heading = doc.add_heading('تنويه', level=2)
-        set_rtl(disclaimer_heading)
+        disclaimer_heading.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
         disclaimer_paragraph_1 = doc.add_paragraph(
             "يستند هذا التقرير إلى الملاحظات البصرية للمعدات الرئيسية المتعلقة بالطاقة والمياه في منزلك من قبل بلدية رأس الخيمة. لا تشمل الملاحظات أي قياسات أو تحاليل مفصلة."
         )
