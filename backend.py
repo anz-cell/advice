@@ -375,7 +375,7 @@ def create_report_arabic(data, recommendations):
         overview_paragraph = doc.add_paragraph(
             "يُلخص هذا التقرير النتائج والتوصيات بعد تدقيق الطاقة الذي أُجري في منزلك كجزء من خدمة استشارات طاقة منزلي في رأس الخيمة. الهدف من التدقيق هو المساعدة في تقليل فواتير الكهرباء والمياه وجعل منزلك أكثر راحة وحداثة."
         )
-        #set_ltr(overview_paragraph)
+        set_rtl(overview_paragraph)
         set_paragraph_spacing(overview_paragraph)
 
         # Audit Details
@@ -470,7 +470,7 @@ def create_report_arabic(data, recommendations):
             for cell in row_cells:
                 set_cell_shading(cell, "D3D3D3") 
                 for paragraph in cell.paragraphs:
-                    set_ltr(paragraph)
+                    set_rtl(paragraph)
                     paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
                 set_borders(cell)
             i+=1
