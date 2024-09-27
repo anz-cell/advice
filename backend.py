@@ -467,7 +467,7 @@ def create_report_arabic(data, recommendations):
             row_cells[0].text = priority
             for paragraph in row_cells[0].paragraphs:
                 set_paragraph_spacing(paragraph)
-                paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+                paragraph.paragraph_format.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
             set_cell_shading(row_cells[0], "D3D3D3")
             for cell in row_cells:
                 set_cell_shading(cell, "D3D3D3") 
