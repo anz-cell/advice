@@ -227,11 +227,19 @@
     </form>
     </div>
     <script>
+        /**
+         * Toggles the visibility of a dropdown menu and its associated input field.
+         * 
+         * @param {string} option - The ID of the checkbox element that controls the dropdown.
+         */
         function toggleDropdown(option) {
+            // Get the checkbox, dropdown, and input elements by their IDs.
             const checkbox = document.getElementById(option);
             const dropdown = document.getElementById('dropdown_' + option);
             const input = document.getElementById('input_' + option);
 
+            // If the checkbox is checked, display the dropdown and input field.
+            // Otherwise, hide them.
             if (checkbox.checked) {
                 dropdown.style.display = 'inline-block';
                 input.style.display = 'inline-block';
@@ -240,46 +248,53 @@
                 input.style.display = 'none';
             }
         }
+
+        /**
+         * Sets up event listeners for checkboxes and form submission.
+         */
         document.addEventListener('DOMContentLoaded', function () {
+            // Toggle the display of each dropdown based on its corresponding checkbox state on page load.
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(function (checkbox) {
                 toggleDropdown(checkbox.id);
             });
-        });
 
-        document.addEventListener('DOMContentLoaded', function () {
+            // Handle form submission.
             const form = document.getElementById('auditForm');
-            const language = "{{ language }}";
+            const language = "{{ language }}"; // Assuming this is rendered server-side with the correct language value.
 
             form.addEventListener('submit', function (event) {
+                // Prevent default form submission.
                 event.preventDefault();
 
+                // Create FormData and plain object representations of form data.
                 const formData = new FormData(form);
                 const formObject = {};
-
                 formData.forEach((value, key) => {
                     formObject[key] = value;
                 });
-                const overlay = document.getElementById('overlay');
-                const status = document.getElementById('status');
 
+                // Display the overlay to indicate processing.
+                const overlay = document.getElementById('overlay');
                 overlay.style.display = 'block';
 
+                // Log form data to console (for debugging).
                 console.log(formObject);
 
+                // Send the form data to the server for report generation.
                 fetch('/generate_report', {
                     method: 'POST',
-                    body: formData
+                    body: formData 
                 })
-                    .then(response => response.blob())
-
+                    .then(response => response.blob()) // Expect a blob response (the generated report).
                     .then(blob => {
-
-                        // Create a link element
+                        // Create a download link for the generated report.
                         const link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
+
+                        // Construct filename based on language and report number.
                         let filename = 'Manzili_Energy_Audit_Report';
-                        if (language == 'arabic') {
+                        if (language === 'arabic') {
                             const reportNumber = document.querySelector('input[name="رقم_التقرير"]').value;
                             if (reportNumber !== '') {
                                 filename += `_${reportNumber}`;
@@ -290,54 +305,59 @@
                                 filename += `_${reportNumber}`;
                             }
                         }
-                        filename += '.docx';
+                        filename += '.docx'; // Assume the report is a Word document.
                         link.download = filename;
 
-
+                        // Hide the overlay.
                         overlay.style.display = 'none';
 
-                        // Append link to the body and trigger a click
+                        // Programmatically trigger the download.
                         document.body.appendChild(link);
                         link.click();
-
-                        // Clean up
                         document.body.removeChild(link);
 
+                        // Optionally delete the file from the server after download.
                         fetch('/delete_file', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({ filename: filename })
-                        })
+                        });
                     })
                     .catch(error => {
+                        // Display any errors during report generation.
                         overlay.style.display = 'none';
+                        const status = document.getElementById('status'); 
                         status.textContent = 'Error generating report: ' + error;
                     });
-
             });
-
-
         });
     </script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            loadAllInputs();
-        });
+        /**
+         * Saves the value of an input, select, or textarea element to local storage.
+         *
+         * @param {HTMLElement} element - The element whose value needs to be saved.
+         */
         function saveInput(element) {
             localStorage.setItem(element.id, element.value);
         }
 
+        /**
+         * Loads saved values for all input, select, and textarea elements from local storage.
+         */
         function loadAllInputs() {
-            var elements = document.querySelectorAll('input, select, textarea');
+            const elements = document.querySelectorAll('input, select, textarea');
 
             elements.forEach(function (element) {
-                var savedValue = localStorage.getItem(element.id);
+                const savedValue = localStorage.getItem(element.id);
                 if (savedValue !== null) {
                     element.value = savedValue;
                 }
 
+                // Add event listeners to save the value on input or change.
                 element.addEventListener('input', function () {
                     saveInput(element);
                 });
@@ -347,6 +367,9 @@
                 });
             });
         }
+
+        // Load saved input values when the DOM is fully loaded.
+        document.addEventListener('DOMContentLoaded', loadAllInputs);
     </script>
 </body>
 
