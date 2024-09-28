@@ -7,44 +7,68 @@ from backend import generate_recommendations_english, create_report_english, gen
 from database import Recommendation_English,Recommendation_Arabic
 import logging
 
+# Initialize Flask app
 app = Flask(__name__, static_url_path='/static')
-# Configure Google API
+
+# Configure Google Generative AI API key
+# WARNING: Storing API keys directly in code is a security risk.
+# Consider using environment variables or a more secure method.
 os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
 genai.configure(api_key=os.environ['API_KEY'])
 
+# Route for language selection page
 @app.route('/')
 def language_selection():
+    """Renders the language selection page."""
     return render_template('language_selection.html')
 
+# Route for the main application page
 @app.route('/index/<language>')
 def index(language):
+    """
+    Renders the main application page.
+
+    Args:
+        language (str): The selected language ('arabic' or 'english').
+    
+    Returns:
+        Rendered HTML template for the index page.
+    """
+    # Load recommendations based on the selected language
     if language == 'arabic':
         Recommendations = list(Recommendation_Arabic.keys())
     else:
         Recommendations = list(Recommendation_English.keys())
-    return render_template('index.html', language=language, Recommendation = Recommendations)
+
+    return render_template('index.html', language=language, Recommendation=Recommendations)
+
+# Route for generating the energy audit report
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
-        data = request.form.to_dict()
-        language = data.pop('language')
-        if language == 'arabic':
-            recommendations = generate_recommendations_arabic(data)
-            create_report_arabic(data, recommendations)
-            filename = f'Manzili_Energy_Audit_Report_{data["رقم_التقرير"]}.docx'
-        else:
-            recommendations = generate_recommendations_english(data)
-            create_report_english(data, recommendations)
-            filename = f'Manzili_Energy_Audit_Report_{data["report_number"]}.docx'
-        return send_file(filename, as_attachment=True, download_name=filename)
+    """
+    Generates and sends the energy audit report.
 
-@app.route('/delete_file', methods=['POST'])
-def delete_file():
-    data = request.json
-    filename = data.get('filename')
-    if filename:
-        filename= os.path.join(os.path.dirname(__file__), filename)
-        os.remove(filename)
-        #since the function doesnt return it will say there is a warning it doesnt return but we dont want to return anything so its fine, the warning doesnt cause any problems.
+    Receives form data, generates recommendations, creates the report,
+    and sends it as a downloadable file.
+    """
+    # Get form data as a dictionary
+    data = request.form.to_dict()
+    # Extract language information
+    language = data.pop('language')
 
+    # Generate recommendations and create report based on language
+    if language == 'arabic':
+        recommendations = generate_recommendations_arabic(data)
+        create_report_arabic(data, recommendations)
+        filename = f'Manzili_Energy_Audit_Report_{data["رقم_التقرير"]}.docx'
+    else:
+        recommendations = generate_recommendations_english(data)
+        create_report_english(data, recommendations)
+        filename = f'Manzili_Energy_Audit_Report_{data["report_number"]}.docx'
+
+    # Send the generated report file
+    return send_file(filename, as_attachment=True, download_name=filename)
+
+# Run the Flask application if the script is executed directly
 if __name__ == '__main__':
     app.run(debug=True)
