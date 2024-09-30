@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Specifies the document type as HTML5 -->
     <meta charset="UTF-8">
+    <!-- Sets the character encoding of the document to UTF-8 -->
+    
+    <!-- Ensures the webpage is responsive and displays correctly on different devices by setting the viewport scale -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Links an external CSS file to style the webpage. 'url_for' dynamically generates the URL for the static file -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+    <!-- Sets the title of the webpage displayed in the browser tab -->
     <title>Language Selection</title>
 </head>
-<body class = "lang-selection-body">
-<div class="container">
-    <form action="{{ url_for('index', language='english') }}">
-        <button type="submit" class="lang-button">English</button>
-    </form>
-    <form action="{{ url_for('index', language='arabic') }}">
-        <button type="submit" class="lang-button">العربية</button>
-    </form>
-</div>
+<body class="lang-selection-body">
+    <!-- Defines a container to hold the form elements -->
+    <div class="container">
+        <!-- First form to select English as the language. The 'url_for' generates the URL for the 'index' route with the 'language' parameter set to 'english' -->
+        <form action="{{ url_for('index', language='english') }}">
+            <!-- Button to submit the form and select English -->
+            <button type="submit" class="lang-button">English</button>
+        </form>
+
+        <!-- Second form to select Arabic as the language. The 'url_for' generates the URL for the 'index' route with the 'language' parameter set to 'arabic' -->
+        <form action="{{ url_for('index', language='arabic') }}">
+            <!-- Button to submit the form and select Arabic -->
+            <button type="submit" class="lang-button">العربية</button>
+        </form>
+    </div>
 </body>
 </html>
-
