@@ -2,9 +2,9 @@ Please reach out to Dr. Pablo to request the credentials for the GitHub and Rend
 
 First, create a new folder on your computer and name it something memorable.
 
-Right-click on the folder and select Open with VS Code to open it in Visual Studio Code.
+Right-click on the folder and select "Open with VS Code" to open it in Visual Studio Code.
 
-Once VS Code is open, launch the terminal and run the following command to clone the project repository:
+Once VS Code is open, launch the terminal by the Ctrl + Shift + ` and run the following command to clone the project repository:
 
     git clone <repository-url>
 
@@ -23,7 +23,7 @@ To run the application, use the following command:
     python app.py
 
 
-After running the app, press Ctrl + click on the localhost link to view the application in your browser.
+After running the app, press Ctrl + click on the localhost link to view the website in your browser.
 
 Ensure you're signed in to VS Code with the same GitHub account.
 
@@ -32,4 +32,4 @@ After making changes, click the Source Control button on the left side of VS Cod
 Sync the changes by clicking Sync Changes.
 
 Finally, go to Render.com and deploy your latest changes by selecting the project and choosing the Deploy your Latest commit option from the Manual Deploy dropdown and then click the
-logs option to see the progress and errors.
+logs option on the left sidebar to see the progress and errors.
