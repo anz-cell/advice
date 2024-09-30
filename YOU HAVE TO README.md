@@ -8,7 +8,6 @@ Once VS Code is open, launch the terminal by the Ctrl + Shift + ` and run the fo
 
     git clone <repository-url>
 
-
 Navigate to the project folder by running:
 
     cd advice
@@ -17,11 +16,9 @@ Install the project dependencies by running:
 
     pip install -r requirements.txt
 
-
 To run the application, use the following command:
 
     python app.py
-
 
 After running the app, press Ctrl + click on the localhost link to view the website in your browser.
 
