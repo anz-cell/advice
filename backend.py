@@ -8,9 +8,6 @@ import os
 from database import Recommendation_English, Recommendation_Arabic  # Used to fetch recommendations in English and Arabic
 import re  # Used for working with regular expressions
 
-# Set the API key for authentication using environment variables for security.
-os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
-
 # Configure the generative AI model using the API key.
 genai.configure(api_key=os.environ['API_KEY'])
 
