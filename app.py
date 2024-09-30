@@ -11,9 +11,6 @@ import logging
 app = Flask(__name__, static_url_path='/static')
 
 # Configure Google Generative AI API key
-# WARNING: Storing API keys directly in code is a security risk.
-# Consider using environment variables or a more secure method.
-os.environ['API_KEY'] = 'AIzaSyCVVe2FwYmaaDG61RAQ-e8pOvIs8CzsrME'
 genai.configure(api_key=os.environ['API_KEY'])
 
 # Route for language selection page
